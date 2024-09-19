@@ -9,7 +9,7 @@
 
 todos = []
 while True:
-    user_action = input("Type add, show, edit, or exit: ").strip()
+    user_action = input("Type add, show, edit, complete, or exit: ").strip()
 
     match user_action:
         case "add":
@@ -19,11 +19,14 @@ while True:
             if (len(todos) == 0):
                 print("Your todo list is empty")
                 continue
-            for item in todos:
-                print(f'{todos.index(item) + 1}: {item}')
+            for index, item in enumerate(todos):
+                print(f'{index + 1}: {item}')
         case "edit":
-            todoIndex = int(input("Enter todo number: ")) - 1
+            todoIndex = int(input("Enter todo number to edit: ")) - 1
             todos[todoIndex] = input("Enter new todo: ")
+        case "complete":
+            todoIndex = int(input("Enter todo number to complete: ")) - 1
+            todos.pop(todoIndex)
         case "exit":
             break
         # case whatever:
