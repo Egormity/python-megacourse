@@ -7,13 +7,17 @@
 # todos = [todo1, todo2, todo3]
 # print(todos)
 
-a = [1, 2, 3]
-b = ['a', 'b', 'c']
+# a = [1, 2, 3]
+# b = ['a', 'b', 'c']
 
-for num, str in zip(a, b):
-    print(num, str)
+# for num, str in zip(a, b):
+#     print(num, str)
 
-todosPath = r"C:\Users\kotla\Desktop\python-megacourse\001 - todo app\todos.txt"
+filenames = ["accounts.txt", "details.csv", "invite.docx"]
+filenames = [filename.replace('.', '-hi.') for filename in filenames]
+print (filenames)
+
+todos_path = r"C:\Users\kotla\Desktop\python-megacourse\001 - todo app\todos.txt"
 
 while True:
     user_action = input("Type add, show, edit, complete, or exit: ").strip()
@@ -22,26 +26,28 @@ while True:
         case "add":
             todo = input("Enter your todo: ") + "\n"
 
-            file = open(todosPath, "a")
+            file = open(todos_path, "a")
             file.writelines(todo)
             file.close()
         case "show":
-            file = open(todosPath, "r")
+            file = open(todos_path, "r")
             todos = file.readlines()
             file.close()
+
+            # new_todos = [item.strip("\n") for item in todos]
 
             if (len(todos) == 0):
                 print("Your todo list is empty")
                 continue
             for index, item in enumerate(todos):
-                print(f'{index + 1}: {item}')
+                print(f'{index + 1}: {item.replace('\n', "")}')
 
         case "edit":
-            todoIndex = int(input("Enter todo number to edit: ")) - 1
-            todos[todoIndex] = input("Enter new todo: ")
+            todo_index = int(input("Enter todo number to edit: ")) - 1
+            todos[todo_index] = input("Enter new todo: ")
         case "complete":
-            todoIndex = int(input("Enter todo number to complete: ")) - 1
-            todos.pop(todoIndex)
+            todo_index = int(input("Enter todo number to complete: ")) - 1
+            todos.pop(todo_index)
         case "exit":
             break
         # case whatever: = case _:
