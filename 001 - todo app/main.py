@@ -13,9 +13,9 @@
 # for num, str in zip(a, b):
 #     print(num, str)
 
-filenames = ["accounts.txt", "details.csv", "invite.docx"]
-filenames = [filename.replace('.', '-hi.') for filename in filenames]
-print (filenames)
+# filenames = ["accounts.txt", "details.csv", "invite.docx"]
+# filenames = [filename.replace('.', '-hi.') for filename in filenames]
+# print (filenames)
 
 todos_path = r"C:\Users\kotla\Desktop\python-megacourse\001 - todo app\todos.txt"
 
@@ -25,16 +25,11 @@ while True:
     match user_action:
         case "add":
             todo = input("Enter your todo: ") + "\n"
-
-            file = open(todos_path, "a")
-            file.writelines(todo)
-            file.close()
+            with open(todos_path, "a") as file:
+                file.writelines(todo)
         case "show":
-            file = open(todos_path, "r")
-            todos = file.readlines()
-            file.close()
-
-            # new_todos = [item.strip("\n") for item in todos]
+            with open(todos_path, "r") as file:
+                todos = file.readlines()
 
             if (len(todos) == 0):
                 print("Your todo list is empty")
@@ -43,11 +38,32 @@ while True:
                 print(f'{index + 1}: {item.replace('\n', "")}')
 
         case "edit":
+            # GET TODOS
+            with open(todos_path, "r") as file:
+                todos = file.readlines()
+
+            # UPDATE TODOS
             todo_index = int(input("Enter todo number to edit: ")) - 1
-            todos[todo_index] = input("Enter new todo: ")
+            todos[todo_index] = input("Enter new todo: ") + '\n'
+
+            # UPDATE FILE
+            with open(todos_path, "w") as file:
+                file.writelines(todos)
         case "complete":
+            # GET TODOS
+            with open(todos_path, "r") as file:
+                todos = file.readlines()
+
+            # UPDATE TODOS
             todo_index = int(input("Enter todo number to complete: ")) - 1
+            todo_to_remove = todos[todo_index]
             todos.pop(todo_index)
+
+            # UPDATE FILE
+            with open(todos_path, "w") as file:
+                file.writelines(todos)
+            
+            print(f"Todo '{todo_to_remove.replace('\n', '')}' was removed from the list")
         case "exit":
             break
         # case whatever: = case _:
