@@ -20,52 +20,57 @@
 todos_path = r"C:\Users\kotla\Desktop\python-megacourse\001 - todo app\todos.txt"
 
 while True:
-    user_action = input("Type add, show, edit, complete, or exit: ").strip()
+    user_action = input("Type add (your todo), show, edit (todo number), complete (todo number), or exit: ").strip()
+    
+    if "add " in user_action or "new " in user_action:
+        todo = user_action[4:]
+        with open(todos_path, "a") as file:
+            file.writelines(todo)
+        print(f"Todo {todo} successfully added to the list")
 
-    match user_action:
-        case "add":
-            todo = input("Enter your todo: ") + "\n"
-            with open(todos_path, "a") as file:
-                file.writelines(todo)
-        case "show":
-            with open(todos_path, "r") as file:
-                todos = file.readlines()
+    elif "show" in user_action:
+        with open(todos_path, "r") as file:
+            todos = file.readlines()
 
-            if (len(todos) == 0):
-                print("Your todo list is empty")
-                continue
-            for index, item in enumerate(todos):
-                print(f'{index + 1}: {item.replace('\n', "")}')
+        if (len(todos) == 0):
+            print("Your todo list is empty")
+            continue
+        for index, item in enumerate(todos):
+            print(f'{index + 1}: {item.replace('\n', "")}')
 
-        case "edit":
-            # GET TODOS
-            with open(todos_path, "r") as file:
-                todos = file.readlines()
+    elif "edit " in user_action:
+        # GET TODOS
+        with open(todos_path, "r") as file:
+            todos = file.readlines()
 
-            # UPDATE TODOS
-            todo_index = int(input("Enter todo number to edit: ")) - 1
-            todos[todo_index] = input("Enter new todo: ") + '\n'
+        # UPDATE TODOS
+        todo_index = int(user_action[5:]) - 1
+        todos[todo_index] = input("Enter new todo: ") + '\n'
 
-            # UPDATE FILE
-            with open(todos_path, "w") as file:
-                file.writelines(todos)
-        case "complete":
-            # GET TODOS
-            with open(todos_path, "r") as file:
-                todos = file.readlines()
+        # UPDATE FILE
+        with open(todos_path, "w") as file:
+            file.writelines(todos)
 
-            # UPDATE TODOS
-            todo_index = int(input("Enter todo number to complete: ")) - 1
-            todo_to_remove = todos[todo_index]
-            todos.pop(todo_index)
+    elif "complete" in user_action:
+        # GET TODOS
+        with open(todos_path, "r") as file:
+            todos = file.readlines()
 
-            # UPDATE FILE
-            with open(todos_path, "w") as file:
-                file.writelines(todos)
-            
-            print(f"Todo '{todo_to_remove.replace('\n', '')}' was removed from the list")
-        case "exit":
-            break
-        # case whatever: = case _:
-        case _:
-            print("Unknown command")
+        # UPDATE TODOS
+        todo_index = int(user_action[9:]) - 1
+        todo_to_remove = todos[todo_index]
+        todos.pop(todo_index)
+
+        # UPDATE FILE
+        with open(todos_path, "w") as file:
+            file.writelines(todos)
+        
+        print(f"Todo '{todo_to_remove.replace('\n', '')}' was removed from the list")
+
+    elif "exit" in user_action:
+        break
+
+    else:
+        print("Unknown command")
+
+print("Bye!")
