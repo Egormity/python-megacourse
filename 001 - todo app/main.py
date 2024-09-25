@@ -22,13 +22,13 @@ todos_path = r"C:\Users\kotla\Desktop\python-megacourse\001 - todo app\todos.txt
 while True:
     user_action = input("Type add (your todo), show, edit (todo number), complete (todo number), or exit: ").strip()
     
-    if "add " in user_action or "new " in user_action:
+    if user_action.startswith("add ") or user_action.startswith("new "):
         todo = user_action[4:]
         with open(todos_path, "a") as file:
-            file.writelines(todo)
+            file.writelines(todo + '\n')
         print(f"Todo {todo} successfully added to the list")
 
-    elif "show" in user_action:
+    elif user_action.startswith("show"):
         with open(todos_path, "r") as file:
             todos = file.readlines()
 
@@ -38,36 +38,44 @@ while True:
         for index, item in enumerate(todos):
             print(f'{index + 1}: {item.replace('\n', "")}')
 
-    elif "edit " in user_action:
-        # GET TODOS
-        with open(todos_path, "r") as file:
-            todos = file.readlines()
+    elif user_action.startswith("edit "):
+        try:
+            # GET TODOS
+            with open(todos_path, "r") as file:
+                todos = file.readlines()
 
-        # UPDATE TODOS
-        todo_index = int(user_action[5:]) - 1
-        todos[todo_index] = input("Enter new todo: ") + '\n'
+            # UPDATE TODOS
+            todo_index = int(user_action[5:]) - 1
+            todos[todo_index] = input("Enter new todo: ") + '\n'
 
-        # UPDATE FILE
-        with open(todos_path, "w") as file:
-            file.writelines(todos)
+            # UPDATE FILE
+            with open(todos_path, "w") as file:
+                file.writelines(todos)
 
-    elif "complete" in user_action:
-        # GET TODOS
-        with open(todos_path, "r") as file:
-            todos = file.readlines()
+        except (ValueError, IndexError):
+            print(f"You entered an invalid todo number {user_action[5:]}")
 
-        # UPDATE TODOS
-        todo_index = int(user_action[9:]) - 1
-        todo_to_remove = todos[todo_index]
-        todos.pop(todo_index)
+    elif user_action.startswith("complete "):
+        try:
+            # GET TODOS
+            with open(todos_path, "r") as file:
+                todos = file.readlines()
 
-        # UPDATE FILE
-        with open(todos_path, "w") as file:
-            file.writelines(todos)
-        
-        print(f"Todo '{todo_to_remove.replace('\n', '')}' was removed from the list")
+            # UPDATE TODOS
+            todo_index = int(user_action[9:]) - 1
+            todo_to_remove = todos[todo_index]
+            todos.pop(todo_index)
 
-    elif "exit" in user_action:
+            # UPDATE FILE
+            with open(todos_path, "w") as file:
+                file.writelines(todos)
+            
+            print(f"Todo '{todo_to_remove.replace('\n', '')}' was removed from the list")
+            
+        except (ValueError, IndexError):
+            print(f"You entered an invalid todo number {user_action[5:]}")
+
+    elif user_action.startswith("exit"):
         break
 
     else:
