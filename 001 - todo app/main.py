@@ -19,6 +19,12 @@
 
 todos_path = r"C:\Users\kotla\Desktop\python-megacourse\001 - todo app\todos.txt"
 
+def get_todos():
+    with open(todos_path, "r") as file:
+        todos = file.readlines()
+    return todos
+
+
 while True:
     user_action = input("Type add (your todo), show, edit (todo number), complete (todo number), or exit: ").strip()
     
@@ -29,8 +35,7 @@ while True:
         print(f"Todo {todo} successfully added to the list")
 
     elif user_action.startswith("show"):
-        with open(todos_path, "r") as file:
-            todos = file.readlines()
+        todos = get_todos()
 
         if (len(todos) == 0):
             print("Your todo list is empty")
@@ -40,9 +45,7 @@ while True:
 
     elif user_action.startswith("edit "):
         try:
-            # GET TODOS
-            with open(todos_path, "r") as file:
-                todos = file.readlines()
+            todos = get_todos()
 
             # UPDATE TODOS
             todo_index = int(user_action[5:]) - 1
@@ -57,9 +60,7 @@ while True:
 
     elif user_action.startswith("complete "):
         try:
-            # GET TODOS
-            with open(todos_path, "r") as file:
-                todos = file.readlines()
+            todos = get_todos()
 
             # UPDATE TODOS
             todo_index = int(user_action[9:]) - 1
