@@ -1,45 +1,4 @@
-# user_prompt = "Enter your todo: "
-
-# todo1 = input(user_prompt)
-# todo2 = input(user_prompt)
-# todo3 = input(user_prompt)
-
-# todos = [todo1, todo2, todo3]
-# print(todos)
-
-# a = [1, 2, 3]
-# b = ['a', 'b', 'c']
-
-# for num, str in zip(a, b):
-#     print(num, str)
-
-# filenames = ["accounts.txt", "details.csv", "invite.docx"]
-# filenames = [filename.replace('.', '-hi.') for filename in filenames]
-# print (filenames)
-
-# text = """
-# Hello!
-# How are you?
-# """
-# print(text)
-
-todos_path = r"C:\Users\kotla\Desktop\python-megacourse\001 - todo app\todos.txt"
-
-def get_todos():
-    """Read a text file and return the list of to-do items"""
-    with open(todos_path, "r") as file:
-        todos = file.readlines()
-    return todos
-
-def add_todo(todo):
-    """Write the to-do item to the text file"""
-    with open(todos_path, "a") as file:
-        file.writelines(todo)
-
-def write_todos(todos):
-    """Write the to-do items list to the text file"""
-    with open(todos_path, "w") as file:
-        file.writelines(todos)
+from functions import get_todos, write_todos, add_todo
 
 while True:
     # GET USER ACTION
