@@ -1,5 +1,7 @@
 from functions import get_todos, write_todos, add_todo
+import time
 
+print(time.strftime("%a, %d %b %Y %H:%M:%S", time.localtime()))
 while True:
     # GET USER ACTION
     user_action = input("Type add (your todo), show, edit (todo number), complete (todo number), or exit: ").strip()
