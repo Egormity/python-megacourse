@@ -1,4 +1,5 @@
-TODOS_PATH = r"C:\Users\kotla\Desktop\python-megacourse\001-todo-app\todos.txt"
+# TODOS_PATH = r"C:\Users\kotla\Desktop\python-megacourse\001-todo-app\todos.txt"
+TODOS_PATH = r"todos.txt"
 
 def get_todos():
     """Read a text file and return the list of to-do items"""
@@ -21,6 +22,12 @@ def edit_todo(todo_to_edit, new_todo):
     todos = get_todos()
     old_todo_index = todos.index(todo_to_edit)
     todos[old_todo_index] = new_todo 
+    write_todos(todos)
+
+def complete_todo(todo_to_complete):
+    """Complete and remove the to-do item"""
+    todos = get_todos()
+    todos.remove(todo_to_complete)
     write_todos(todos)
 
 if __name__ == "__main__":
