@@ -1,11 +1,6 @@
 from functions import get_todos, add_todo, edit_todo, complete_todo
 import PySimpleGUI
 import time
-import os
-
-if (not os.path.exists("todos.txt")):
-    with open("todos.txt", "w") as file: 
-        pass
 
 PySimpleGUI.theme("Black")
 

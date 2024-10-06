@@ -1,5 +1,12 @@
+
+import os
+
 # TODOS_PATH = r"C:\Users\kotla\Desktop\python-megacourse\001-todo-app\todos.txt"
 TODOS_PATH = r"todos.txt"
+
+if (not os.path.exists("todos.txt")):
+    with open("todos.txt", "w") as file: 
+        pass
 
 def get_todos():
     """Read a text file and return the list of to-do items"""
