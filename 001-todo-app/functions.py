@@ -5,7 +5,7 @@ import os
 TODOS_PATH = r"todos.txt"
 
 if (not os.path.exists("todos.txt")):
-    with open("todos.txt", "w") as file: 
+    with open(TODOS_PATH, "w") as file: 
         pass
 
 def get_todos():
