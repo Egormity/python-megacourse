@@ -1,17 +1,25 @@
 import cv2
+import glob
+import os 
+import threading
 from email  import send_email
 
 capture = cv2.VideoCapture(0)
 
 first_frame = None
 status_list = []
+count = 1
+
+def clean_folder():
+    images = glob.glob("images/*")
+    for image in images:
+        os.remove(image)
 
 while True:
     status = 0
     check, frame = capture.read()
     gray = cv2.cvtColor(frame, cv2.COLOR_BGR2GRAY)
     gray_gau = cv2.GaussianBlur(gray, (21, 21), 0)
-    
     if first_frame is None:
         first_frame = gray_gau
 
@@ -28,12 +36,18 @@ while True:
 
         if rect.any(): 
             status = 1
+            cv2.imwrite(f"/images/{count}.png", frame)
+            count += 1
+            image_email = f"/images/{int(count / 2)}.png"
 
     status_list.append(status)
     status_list = status_list[-2:]
     
-     if status_list[0] == 1 and status_list[-2] == 0:
-        send_email()
+    if status_list[0] == 1 and status_list[-2] == 0:
+        def func ():
+            send_email(image_email)
+            clean_folder()
+        thread = threading.Thread(target=func).start()
 
     cv2.imshow('frame', contours)
     
