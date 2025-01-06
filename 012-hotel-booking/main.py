@@ -40,16 +40,36 @@ class ReservationTicket:
         Check-out date: TODO:
         """
 
-if __name__ == "__main__":
-    print(df)
+class CreditCard:
+    # 
+    def __init__(self, number):
+        self.number = number
+    # 
+    def validate(self, expiration_date, holder, cvv):
+        self.expiration_date = expiration_date
+        self.holder = holder
+        self.cvv = cvv
+        # TODO:
+        return True
 
+class SecureCreditCard(CreditCard):
+    def authenticate(self):
+        password = "1234"
+        # TODO:
+        return True
+
+if __name__ == "__main__":
     hotel_id = input("Enter hotel id to book: ")
     hotel = Hotel(int(hotel_id))
 
     if hotel.is_available():
-        hotel.book()
-        name = input("Enter your name: ")
-        reservation_ticket = ReservationTicket(name, hotel)
-        reservation_ticket.generate()
+        credit_card = SecureCreditCard(number="1234-1234-1234-1234", expiration_date="01/23", holder="John Doe", cvv="123")
+        if (credit_card.validate()):
+            hotel.book()
+            name = input("Enter your name: ")
+            reservation_ticket = ReservationTicket(name, hotel)
+            reservation_ticket.generate()
+        else:
+            print("Invalid credit card information")
     else:
         print(f"Hotel {hotel_id} is not available")
