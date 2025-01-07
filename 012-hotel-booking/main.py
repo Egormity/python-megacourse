@@ -34,11 +34,23 @@ class ReservationTicket:
     def generate(self):
         return f"""
         Generated reservation ticket:
-        Customer name: {self.customer_name}
+        Customer name: {self.the_customer_name}
         Hotel name: {self.hotel_object.name}
         Check-in date: TODO:
         Check-out date: TODO:
         """
+    
+    #
+    @property
+    def the_customer_name(self):
+        return self.customer_name.strip().title()
+    
+    @staticmethod
+    def convert(amount):
+        return amount * 1.2
+
+    def __qe__(self, other):
+        return self.hotel_object.hotel_id == other.hotel_object.hotel_id
 
 class CreditCard:
     # 
